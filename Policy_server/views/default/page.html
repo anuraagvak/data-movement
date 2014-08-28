@@ -1,0 +1,168 @@
+{{extend 'layout.html'}}
+<script>
+  var flag = true;
+function resetIndex(selObj) {
+    if(flag) selObj.selectedIndex = -1;
+    flag = true;
+}
+function doSomething(selObj,sar) {
+//alert(sar.length)
+   
+    for (var i=0;i<sar.length;i++)
+    {
+         //   alert(sar[i])
+            if (sar[i] == selObj.value)
+           {
+           //         alert(sar[i] + "     " + "inside")
+                    document.getElementById(selObj.value).style.display = 'inline';
+                    document.getElementById("submit").style.display= 'inline';
+           }
+            else
+            { 
+             //       alert(sar[i] + "     " + "inside1")
+                    
+                    document.getElementById(sar[i]).style.display = 'none';
+            }
+    }
+    flag = false;
+}
+
+
+function myfunct(u,v)
+{
+        var sar = u+"$"+v
+        var sar1 = sar+"$"+"encrypt"
+        var sar2 = sar+"$"+"mask"
+        var sar3 = sar+"$"+"none"
+
+        if (document.getElementById(sar).checked)
+        {        //alert(sar)
+                            document.getElementById(sar1).style.display = 'inline';
+                            document.getElementById(sar2).style.display = 'inline';
+                            document.getElementById(sar3).style.display = 'inline';
+
+        }
+        else
+        {   
+                           //alert(sar1+" "+sar2)
+                           
+                           document.getElementById(sar1).style.display = 'none';
+                           document.getElementById(sar2).style.display = 'none';
+                           document.getElementById(sar3).style.display = 'none';
+        }     
+           
+}
+function myfunct2(u,v,w)
+{
+                
+                if (w == "mask")
+                {
+                var sar1 = u+"$"+v+"$mask"
+                var sar2 = u+"$"+v+"$info"
+                //alert(sar2)
+               // if (document.getElementById(sar1).checked)
+               // {
+                 //       alert(sar2)
+                        document.getElementById(sar2).style.display = 'inline';
+                        
+                       
+                //}
+                //else
+                //{
+                  //      alert(sar1)
+                    //    document.getElementById(sar2).style.display = 'none';
+               // }
+                }
+                else if (w=="encrypt")
+                {
+                        var sar1 = u+"$"+v+"$encrypt"
+                        var sar2 = u+"$"+v+"$info"
+               //         if (document.getElementById(sar1).checked)
+                 //       {
+                   //             alert(sar1)
+                                document.getElementById(sar2).style.display = 'none';
+                     //   }
+                }
+                else if (w=="none")
+                {
+                        var sar1=u+"$"+v+"$encrypt"
+                        var sar2=u+"$"+v+"$info"
+                        
+                        document.getElementById(sar2).style.display = "none";
+                }
+                    
+}
+        
+function myfunct1(u,v)
+        {
+                var sar = u+"$"+v
+                var sar1 = u+"$"+v+"$hide"
+                if (document.getElementById(sar).checked)
+                {
+                        document.getElementById(sar1).style.display = "inline"
+                }
+                else 
+                {
+                        document.getElementById(sar1).style.display = "none"
+                }
+        }
+        
+        
+        
+ 
+</script>
+<form action="nextpage" method="post">
+ 
+<div>
+        
+        policy Name: <input type="text" name="Policy_name">
+</div>
+<div>
+<select id="dropdown" onchange="doSomething(this,{{=dat}})" onclick="resetIndex(this)" name="dropbox">
+
+          <option value='defaultyy' selected='selected' >Please select the database</option>
+{{for key in dir1.keys():}}
+        <option value="{{=key}}" >{{=key}}</option>
+{{pass}}
+</select>
+</div>
+<br>
+
+<div>
+
+{{for key in dir1.keys():}}
+        <div style= "display:none" id="{{=key}}">
+        {{for tab in dir1[key].keys():}}
+                <input type="checkbox" onclick="myfunct1('{{=key}}','{{=tab}}')" id="{{=key}}${{=tab}}" name="{{=key}}${{=tab}}" value="{{=tab}}">{{=tab}}<br><br>
+                <div id="{{=key}}${{=tab}}$hide" style="display:none">
+                 {{for col in dir1[key][tab]:}}
+                
+             &nbsp;&nbsp;<input type="checkbox" onclick="myfunct('{{=tab}}','{{=col}}')" id="{{=tab}}${{=col}}" value="encode" name="{{=key}}${{=tab}}${{=col}}">{{=col}}
+             &nbsp;&nbsp;<div style="display:none" id="{{=tab}}${{=col}}$none"><input type="radio" onclick="myfunct2('{{=tab}}','{{=col}}','none')" name="{{=key}}${{=tab}}${{=col}}$method" value="none" checked>none</div>
+            &nbsp;&nbsp;<div style="display:none" id="{{=tab}}${{=col}}$encrypt"><input type="radio" onclick="myfunct2('{{=tab}}','{{=col}}','encrypt')" name="{{=key}}${{=tab}}${{=col}}$method" value="encrypt">encrypt</div>
+            &nbsp;&nbsp;<div style="display:none" id="{{=tab}}${{=col}}$mask"><input type="radio" onclick="myfunct2('{{=tab}}','{{=col}}','mask')" name="{{=key}}${{=tab}}${{=col}}$method" value="mask">mask</div>
+            &nbsp;&nbsp;<div style="display:none" id="{{=tab}}${{=col}}$info">Desc:<input type="text" name="{{=key}}${{=tab}}${{=col}}$info"></div>
+            <br></br>      
+                {{pass}}
+                </div>
+                
+                
+        {{pass}}
+        </div>
+{{pass}}
+
+
+</div>
+ <input id="submit" style="display:none" type="submit" name="save">
+       
+</form>
+
+
+
+
+    <!--    {{for tab in dir1[key].keys():}}
+                 &nbsp; {{=tab}}<br>
+                {{for col in dir1[key][tab]:}}
+                        &nbsp; &nbsp; {{=col}}<br>
+                {{pass}}
+        {{pass}}--->

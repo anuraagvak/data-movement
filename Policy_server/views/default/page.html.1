@@ -1,0 +1,61 @@
+{{extend 'layout.html'}}
+{{=dat}}
+<script>
+  var flag = true;
+function resetIndex(selObj) {
+    if(flag) selObj.selectedIndex = -1;
+    flag = true;
+}
+function doSomething(selObj,sar) {
+    var derp=new Array();
+    alert(sar[0])
+    flag = false;
+    for (var i=0;i<sar.length;i++)
+    {
+            if (sar[i] == selfObj.value)
+           {
+                    document.getElementById(selObj.value).style.display = 'inline';
+           }
+            else
+            {
+                    document.getElementById(sar[i]).style.display = 'none';
+            }
+}
+        
+        
+        
+</script>
+<form>
+
+<select id="dropdown" onchange="doSomething(this,{{=dat}})" onclick="resetIndex(this)">
+ 
+          <option value='default' selected='selected' >Please select the value</option>
+{{for key in dir1.keys():}}
+        <option value="{{=key}}" >{{=key}}</option>
+{{pass}}
+</select>
+<br>
+
+<div>
+
+{{for key in dir1.keys():}}
+        <div style= "display:none" id="{{=key}}">
+        {{for tab in dir1[key].keys():}}
+                <input type="checkbox" onclick="myfunc('{{=key}}','{{=tab}}')">{{=tab}}<br><br>
+        {{pass}}
+        </div>
+{{pass}}
+
+
+</div>
+
+</form>
+
+
+
+    <!--    {{for tab in dir1[key].keys():}}
+                 &nbsp; {{=tab}}<br>
+                {{for col in dir1[key][tab]:}}
+                        &nbsp; &nbsp; {{=col}}<br>
+                {{pass}}
+        {{pass}}--->

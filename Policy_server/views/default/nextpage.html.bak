@@ -1,0 +1,15 @@
+{{extend 'layout.html'}}
+<form action="page" method="post">
+    <h2>Policies </h2>
+    <table>
+     <tr>
+         <th>id</th>
+         <th>Name of policy</th>
+     </tr>
+    
+    {{for i in range(0,len(Ffiles)):
+        <tr><td>{{=i}}</td><td>{{=Ffiles[i]}}</td></tr>
+    {{pass}}
+    </table>    
+   <button type="submit">new policy</button>
+</form>
